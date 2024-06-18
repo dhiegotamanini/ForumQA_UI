@@ -1,0 +1,21 @@
+
+<app-spinner [isLoading]="isLoading"></app-spinner>
+
+<div class="card my-2">
+    <h4 class="card-header">Forum: {{forumTypeName}}</h4>
+</div>
+<div >
+  <form [formGroup]="form" (ngSubmit)="onSubmit()"> 
+    <div class="card my-2">
+      <input type="hidden" formControlName="forumId" />
+      
+      <input type="text" class="form-control my-2 mb-2" style="margin-left:10px; width: 98%; " formControlName="title" placeholder="Title" />
+      <h5 class="card-header my-2">Question </h5>
+      <textarea class="form-control mb-2" formControlName="description" rows="5" style="margin-left:10px; width: 98%; ">
+      </textarea>
+    </div>  
+    
+    <button (click)="onBack()" class="btn btn-primary me-2">Cancel</button>
+    <button type="submit"  class="btn btn-success mr-5">Add Question</button>
+  </form>
+</div>

@@ -1,0 +1,55 @@
+
+<app-spinner [isLoading]="isLoading"></app-spinner>
+
+<div class="card my-2">
+    <h4 class="card-header">Forum: {{forumTypeName}}</h4>
+    <h5 class="card-header">Question: {{question}}</h5>
+    
+      <div class="card-body" *ngFor="let answer of answerPost">
+        <div class="row"> 
+          <div class="col-md-2">
+            
+          </div>
+          <div class="col-md-8">
+            <h5 class="card-title">{{ answer.answerDate | date:"dd/MM/yyyy hh:mm:ss" }}</h5> 
+          </div>
+            
+        </div>
+
+
+       <div class="row">
+          <div class="col-md-2">
+            <h6>{{answer.user.userName}}</h6>            
+            <span><img [src]="getPhotoUrl(answer.user.photoFileName)" width="{{imageSize}}"  alt="Foto" /></span> <br />
+            <span>Member since:</span> <br />
+            <span>{{answer.user.memberSince | date: "dd/MM/yyyy hh:mm:ss"}}</span>
+          </div>
+          <div class="col-md-10">
+            <p class="card-text">{{answer.answer}}</p>      
+          </div>
+       </div>                        
+  </div>
+    
+    
+    
+</div>
+<div *ngIf="isSetAddComment" >
+  <form [formGroup]="form" (ngSubmit)="onSubmit()"> 
+    <div class="card my-2">
+      <input type="hidden" formControlName="postId" />
+      <input type="hidden" formControlName="userId" />
+      <h5 class="card-header my-2">Reply Comment </h5>
+      <textarea class="form-control mb-2" formControlName="answer" rows="5" style="margin-left:10px; width: 98%; ">
+      </textarea>
+    </div>  
+    
+    <button (click)="onCancel()" [style.visibility]="isSetAddComment ? 'visible' : 'hidden'" class="btn btn-primary me-2">Cancel</button>
+    <button type="submit"  [style.visibility]="isSetAddComment ? 'visible' : 'hidden'" class="btn btn-success mr-5">Save Comment</button>
+  </form>
+
+    
+</div>
+
+
+    <button (click)="onBack()" [style.visibility]="!isSetAddComment ? 'visible' : 'hidden' " class="btn btn-primary me-2">Back To List</button>
+    <button (click)="onAddComment()" [style.visibility]="!isSetAddComment ? 'visible' : 'hidden' " class="btn btn-success ">Add Comment</button>   

@@ -1,0 +1,81 @@
+
+<app-spinner [isLoading]="isLoading"></app-spinner>
+
+<div id="div-message" *ngIf=" message !== null && message !== '' ">
+    <div class="alert alert-{{hasError ? 'danger' : 'primary' }}" role="alert">
+        {{message}}
+    </div>
+</div>
+
+<div *ngIf="!isAddForumType" class="d-flex flex-column ">
+    <div *ngIf="forumsType != null && forumsType.items " class="flex-grow-1">
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Name</th>
+                            <th>Date Created</th>
+                            <th>User</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let forumType of forumsType.items">
+                            <td>{{forumType.id}}</td>
+                            <td>{{forumType.name}}</td>
+                            <td>{{forumType.dateCreated | date: 'dd/MM/yyyy'}}</td>
+                            <td>{{forumType.userCreated}}</td>
+                            <td>
+                                <button class="btn btn-primary me-1" (click)="onEdit(forumType)">Edit</button>
+                                <button class="btn btn-danger me-1" (click)="onDelete(forumType)">Delete</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row" *ngIf="!isAddForumType">
+  <div class="col-md-12">
+    <button class="btn btn-success" (click)="onAddForumType()">Add Forum Type</button>
+  </div>
+</div>
+
+
+<div *ngIf="isAddForumType">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()"> 
+        <div class="card my-2">
+            <h5 class="card-header my-2">Enter a forum type name</h5>
+            <input type="hidden" formControlName="userCreated" />
+            <input type="hidden" formControlName="id" />
+            <input type="text" class="form-control my-2 mb-2" style="margin-left:10px; width: 98%;" formControlName="name" placeholder="Forum Type Name" maxlength="50" />
+        </div>  
+        <button (click)="onCancel()" [style.visibility]="isAddForumType ? 'visible' : 'hidden'" class="btn btn-primary me-2">Cancel</button>
+        <button type="submit" [style.visibility]="isAddForumType ? 'visible' : 'hidden'" class="btn btn-success mr-5">Save Forum Type</button>
+    </form>        
+</div>
+
+ <div class="modal" tabindex="-1" role="dialog" id="modal"> 
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Delete</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar" (click)="closeModal()">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+            </div>
+            <div class="modal-body">
+                <strong>Are you sure for delete {{forumTypeSelected?.name}}</strong>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="closeModal()" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" (click)="confirmDelete()">Confirm</button>
+            </div>
+        </div>
+    </div>
+</div>
+

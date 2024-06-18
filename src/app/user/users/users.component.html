@@ -1,0 +1,57 @@
+
+<div id="div-message" *ngIf=" message !== null && message !== '' ">
+    <div class="alert alert-{{hasError ? 'danger' : 'primary' }}" role="alert">
+        {{message}}
+    </div>
+</div>
+
+
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Username</th>
+            <th>Member Since</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let user of users?.items">
+            <td>{{user.userId}}</td>
+            <td>{{user.name}}</td>
+            <td>{{user.userName}}</td>
+            <td>{{user.memberSince | date:"dd/MM/yyyy"}}</td>
+            <td>
+                <button class="btn btn-primary me-1" (click)="onEdit(user.userId)">Edit</button>
+                <button class="btn btn-danger me-1" (click)="onDelete(user)">Delete</button>
+            </td>
+        </tr>
+    </tbody>
+
+</table>
+
+
+<div class="modal" tabindex="-1" role="dialog" id="modal"> 
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Delete</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar" (click)="closeModal()">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+            </div>
+            <div class="modal-body">
+                <strong>Are you sure for delete {{userSelected?.name}}</strong>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="closeModal()" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" (click)="confirmDelete()">Confirm</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<button (click)="addUser()" class="btn btn-success">Add User</button>
